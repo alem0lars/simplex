@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--***********************************************************************************************
+  * Copyright (C) 2012  nextreamlabs                                                              *
+  *                                                                                               *
+  * This program is free software: you can redistribute it and/or modify                          *
+  * it under the terms of the GNU General Public License as published by                          *
+  * the Free Software Foundation, either version 3 of the License, or                             *
+  * (at your option) any later version.                                                           *
+  * This program is distributed in the hope that it will be useful,                               *
+  * but WITHOUT ANY WARRANTY; without even the implied warranty of                                *
+  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the                                 *
+  * GNU General Public License for more details.                                                  *
+  * You should have received a copy of the GNU General Public License                             *
+  * along with this program.  If not, see <http://www.gnu.org/licenses/>.                         *
+  ***********************************************************************************************-->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+
+
+  <properties>
+    <custom.basicNamespace>org.nextreamlabs</custom.basicNamespace>
+    <custom.projectId>simplex</custom.projectId>
+    <custom.projectName>Simplex</custom.projectName>
+    <custom.projectUrl>http://pauli.nextreamlabs.org/projects/simplex</custom.projectUrl>
+    <custom.projectYear>2012</custom.projectYear>
+    <custom.projectDescription>
+      Simplex is a generic and flexible linear problems optimizations solver.
+      It allows different algorithms and different ways to interact with it, making it extremely
+      useful for studying those kind of optimizations.
+      It should not be used for production ready problems, since it hasn't been created with
+      performance requirements in mind, but only with extensibility and learning requirements in
+      mind.
+    </custom.projectDescription>
+    <custom.authorName>Alessandro Molari</custom.authorName>
+    <custom.authorEmail>molari.alessandro@gmail.com</custom.authorEmail>
+    <custom.authorUrl>http://alessandro.nextreamlabs.org</custom.authorUrl>
+    <custom.organizationName>nextreamlabs</custom.organizationName>
+    <custom.organizationUrl>http://nextreamlabs.org</custom.organizationUrl>
+    <custom.authorTimezone>Europe/Rome</custom.authorTimezone>
+
+    <custom.javaVersion>6</custom.javaVersion>
+
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+  </properties>
+
+
+  <groupId>${custom.basicNamespace}</groupId>
+  <artifactId>${custom.projectId}</artifactId>
+  <name>${custom.projectName}</name>
+  <url>${custom.projectUrl}</url>
+  <description>${custom.projectDescription}</description>
+  <inceptionYear>${custom.projectYear}</inceptionYear>
+
+  <developers>
+    <developer>
+      <name>${custom.authorName}</name>
+      <email>${custom.authorEmail}</email>
+      <url>${custom.authorUrl}</url>
+      <timezone>${custom.authorTimezone}</timezone>
+      <roles>
+        <role>Analyst</role>
+        <role>Designer</role>
+        <role>Developer</role>
+        <role>Tester</role>
+      </roles>
+    </developer>
+  </developers>
+
+  <issueManagement>
+    <system>Pauli @ nextreamlabs</system>
+    <url>http://pauli.nextreamlabs.org/projects/simplex/issues</url>
+  </issueManagement>
+
+  <version>1.0</version>
+  <packaging>jar</packaging>
+
+  <organization>
+    <name>${custom.organizationName}</name>
+    <url>${custom.organizationUrl}</url>
+  </organization>
+
+  <licenses>
+    <license>
+      <name>GNU General Public License, Version 3</name>
+      <url>http://www.gnu.org/licenses/gpl-3.0.txt</url>
+      <distribution>http://www.gnu.org/licenses/gpl-3.0.txt</distribution>
+      <comments>This is a Free software. Free software is a matter of liberty, not price.
+        To understand the concept, you should think of "free" as in "free speech",
+        not as in "free beer".</comments>
+    </license>
+  </licenses>
+
+  <dependencies>
+
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-lang3</artifactId>
+      <version>3.1</version>
+      <type>jar</type>
+      <scope>compile</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.testng</groupId>
+      <artifactId>testng</artifactId>
+      <version>6.5.2</version>
+      <scope>test</scope>
+    </dependency>
+
+  </dependencies>
+
+  <build>
+
+    <directory>${project.basedir}/bin</directory>
+    <outputDirectory>${project.build.directory}/classes</outputDirectory>
+    <finalName>${project.artifactId}-${project.version}</finalName>
+    <testOutputDirectory>${project.build.directory}/test-classes</testOutputDirectory>
+    <sourceDirectory>src/main/java</sourceDirectory>
+    <scriptSourceDirectory>src/main/scripts</scriptSourceDirectory>
+    <testSourceDirectory>src/test/java</testSourceDirectory>
+
+    <resources>
+      <resource> <!-- Allow the presence of the source resources -->
+        <directory>${project.basedir}/src/main/resources</directory>
+      </resource>
+    </resources>
+    <testResources> <!-- Allow the presence of the test resources -->
+      <testResource>
+        <directory>${project.basedir}/src/test/resources</directory>
+      </testResource>
+    </testResources>
+
+    <plugins>
+
+      <plugin> <!-- Allow to use Java 7 -->
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>1.${custom.javaVersion}</source>
+          <target>1.${custom.javaVersion}</target>
+        </configuration>
+      </plugin>
+
+      <plugin> <!-- Allow the creation of the JAR -->
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+      </plugin>
+
+      <plugin> <!-- Allow to assembly dependencies in the package -->
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <version>2.3</version>
+        <configuration>
+          <descriptorRefs>
+            <descriptorRef>jar-with-dependencies</descriptorRef>
+          </descriptorRefs>
+          <archive>
+            <manifest>
+              <addClasspath>true</addClasspath>
+              <mainClass>org.nextreamlabs.simplex.Main</mainClass>
+            </manifest>
+          </archive>
+        </configuration>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin> <!-- Plugin for tests -->
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <inherited>true</inherited>
+        <configuration>
+          <forkMode>once</forkMode>
+          <reportFormat>html</reportFormat>
+          <reportFormat>xml</reportFormat>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>2.8.1</version>
+        <configuration>
+          <show>public</show>
+        </configuration>
+      </plugin>
+
+    </plugins>
+
+
+
+  </build>
+
+  <reporting>
+
+    <outputDirectory>${project.build.directory}/site</outputDirectory>
+
+    <plugins>
+
+      <plugin> <!-- Enable Tests reports -->
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>surefire-report-maven-plugin</artifactId>
+        <inherited>true</inherited>
+      </plugin>
+
+      <plugin> <!-- Enable JavaDOC reports -->
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>2.8.1</version>
+        <configuration>
+          <show>public</show>
+        </configuration>
+      </plugin>
+
+    </plugins>
+
+  </reporting>
+</project>
